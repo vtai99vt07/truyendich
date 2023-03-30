@@ -202,7 +202,7 @@ class StoryController extends Controller
 
         $categories = Category::where('status', Story::ACTIVE)->get();
         if(!$url  && !empty($request->search)){
-            $stories = Story::where('name', 'rlike', $request->search)->paginate(24);
+            $stories = Story::where('name', 'like', '%' . $request->search . '%')->paginate(24);
             foreach($stories as &$list){
                 $chapters = $list->chapters_json ? json_decode($list->chapters_json, true) : $list->chapters;
 
@@ -274,7 +274,7 @@ class StoryController extends Controller
 
         $stories = Story::with(['categories'])->withCount(['chapters', 'follow', 'whishlist']);
         if(!empty($keyword)) {
-            $stories->orWhere('name', 'rlike', $keyword);
+            $stories->orWhere('name', 'like', '%' . $keyword . '%');
         }
         if(!empty($description)){
             $stories->orWhere('description', 'like', '%'. $description . '%');
