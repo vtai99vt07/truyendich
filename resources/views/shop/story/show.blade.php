@@ -124,8 +124,8 @@
                 @if(strpos(url()->current(), 'truyenvipfaloo'))
                 <div class="p-1 bt">Nguồn truyện: <a class="text-success"
                                                      href="{{ $story->origin ?? '#'}}">{{ $story->origin ?? 'Sáng tác'}}</a>
-                @endif
                 </div>
+                @endif
                 <div class="p-1 bt">Loại
                     truyện: @if(!empty($story->types)) @foreach($story->types as $type) {{ $type->name }} @endforeach @endif</div>
                 <?php
