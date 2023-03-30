@@ -38,6 +38,11 @@ class Kernel extends ConsoleKernel
 		$schedule->command('story:reset_view_week')->weekly();
 		$schedule->command('ranking-cron')->monthlyOn(28)->at('00:00');
 		$schedule->command('check-bank-transfer')->everyMinute()->withoutOverlapping();
+		$schedule->command('leech:faloo')->everyFiveMinutes()->withoutOverlapping();
+		$schedule->command('leech:fanqienovel')->everyFiveMinutes()->withoutOverlapping();
+		$schedule->command('leech:uukanshu')->everyFiveMinutes()->withoutOverlapping();
+		$schedule->command('leech:trxs')->everyFiveMinutes()->withoutOverlapping();
+		$schedule->command('leech:xinyushuwu')->everyFiveMinutes()->withoutOverlapping();
 		//$schedule->command('autoleech:faloo')->everyFiveMinutes()->withoutOverlapping();
 		//$schedule->command('autoleech:fanqie')->everyFiveMinutes()->withoutOverlapping();
 		// $schedule->command('inspire')->hourly();
