@@ -52,7 +52,7 @@
                                     <span class="input-group-text select-title">Tìm từ khóa: </span>
                                 </div>
                                 @endif
-                                <input id="keyword" name="keyword" value="{{ request('keyword') }}"
+                                <input id="keyword" name="keyword" value="{{ request('keyword') ?? request('search') }}"
                                        placeholder=" Tìm trong tên, tên hán việt, tác giả" class="form-control">
                             </div>
                             @if((new \Jenssegers\Agent\Agent())->isDesktop())
