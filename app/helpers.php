@@ -446,9 +446,9 @@ function embedStoryUukanshu($url, $base_url, $user, $story = null, $returnBool =
     $host = $data['host'];
     if (!empty($breadcrums)) {
         foreach ($breadcrums as $key => $breadcrum) {
-            if ($key > 1) {
+//            if ($key > 1) {
                 $categories[] = $breadcrum;
-            }
+//            }
         }
     }
 
