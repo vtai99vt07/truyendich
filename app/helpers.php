@@ -447,7 +447,7 @@ function embedStoryUukanshu($url, $base_url, $user, $story = null, $returnBool =
     if (!empty($breadcrums)) {
         foreach ($breadcrums as $key => $breadcrum) {
 //            if ($key > 1) {
-                $categories[] = $breadcrum;
+            $categories[] = $breadcrum;
 //            }
         }
     }
@@ -498,10 +498,30 @@ function storeStory($title, $story_name, $categories, $story_name_vi, $story_des
     $cat = [];
     if (!empty($categories)) {
         foreach ($categories as $category) {
-            $cat_db = Category::where('status', Category::ACTIVE)->whereJsonContains('name_chines', $category)->first();
-            if ($cat_db) {
-                $cat[] = $cat_db->id;
+            $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', $category);
+            if (!$cat_db->exists()) {
+                $c_viet = _vp_viet($category);
+                $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
+                if (!$cat_db->exists()) {
+                    $cat_db = Category::create([
+                        'name' => $c_viet,
+                        'status' => Category::ACTIVE,
+                        'name_chines' => json_encode([
+                            $category
+                        ])
+                    ]);
+                } else {
+                    $name_chines = json_decode($cat_db->name_chines, true);
+                    $name_chines[] = $category;
+                    $cat_db = $cat_db->first();
+                    $cat_db->update([
+                        'name_chines' => json_encode($name_chines)
+                    ]);
+                }
+            } else {
+                $cat_db = $cat_db->first();
             }
+            $cat[] = $cat_db->id;
         }
     }
 
