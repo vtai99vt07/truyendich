@@ -498,7 +498,7 @@ function storeStory($title, $story_name, $categories, $story_name_vi, $story_des
     $cat = [];
     if (!empty($categories)) {
         foreach ($categories as $category) {
-            $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', $category);
+            $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', '%' . $category . '%');
             if (!$cat_db->exists()) {
                 $c_viet = _vp_viet($category);
                 $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
