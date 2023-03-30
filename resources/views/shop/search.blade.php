@@ -72,37 +72,37 @@
                                               placeholder=" Tìm trong phần tóm tắt của truyện"></textarea>
                                 </div>
                             @endif
-                            @if((new \Jenssegers\Agent\Agent())->isMobile())
-                                <span class="select-title px-0">Chọn nguồn</span>
-                            @endif
-                                @if((new \Jenssegers\Agent\Agent())->isDesktop())
-                                <div class="input-group group-origin">
-                                    <input id="findinhost" name="origin_link" value="{{ request('origin_link') }}"
-                                           placeholder="Chỉ tìm nguồn: " class="form-control">
-                                    <div class="input-group-append">
-                                        <select name="origin" class="form-control">
-                                            <option value="">[Chọn nguồn nhanh]</option>
-                                            @foreach(\App\Domain\Story\Models\Story::ORIGINS as $key => $origin)
-                                                <option value="{{ $key }}"
-                                                        @if($key == request('origin')) selected @endif>{{ $origin }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                @endif
-                                @if((new \Jenssegers\Agent\Agent())->isMobile())
-                                <div class="input-group group-origin p-0">
-                                    <input type="radio" class="btn-check" name="origin"
-                                       id="origin-all" autocomplete="off" value="" @if (empty(request()->input('origin'))) checked @endif>
-                                    <label style="margin: 0 5px 5px 0" class="btn rounded-1 btn-origin @if (empty(request()->input('origin'))) btn-gt @endif" for="origin-all">Tất cả</label>
-                                    @foreach(\App\Domain\Story\Models\Story::ORIGINS as $key => $origin)
-                                        <input type="radio" class="btn-check" name="origin"
-                                               id="origin-{{ $key }}" autocomplete="off" value="{{ $key }}"
-                                               @if($key == request('origin')) checked @endif >
-                                        <label style="margin: 0 5px 5px 0" class="btn btn-origin @if (!empty(request()->input('origin')) && request()->input('origin') == $key) btn-gt @endif rounded-1" for="origin-{{ $key }}">{{ $origin }}</label>
-                                    @endforeach
-                                </div>
-                                @endif
+{{--                            @if((new \Jenssegers\Agent\Agent())->isMobile())--}}
+{{--                                <span class="select-title px-0">Chọn nguồn</span>--}}
+{{--                            @endif--}}
+{{--                                @if((new \Jenssegers\Agent\Agent())->isDesktop())--}}
+{{--                                <div class="input-group group-origin">--}}
+{{--                                    <input id="findinhost" name="origin_link" value="{{ request('origin_link') }}"--}}
+{{--                                           placeholder="Chỉ tìm nguồn: " class="form-control">--}}
+{{--                                    <div class="input-group-append">--}}
+{{--                                        <select name="origin" class="form-control">--}}
+{{--                                            <option value="">[Chọn nguồn nhanh]</option>--}}
+{{--                                            @foreach(\App\Domain\Story\Models\Story::ORIGINS as $key => $origin)--}}
+{{--                                                <option value="{{ $key }}"--}}
+{{--                                                        @if($key == request('origin')) selected @endif>{{ $origin }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                @endif--}}
+{{--                                @if((new \Jenssegers\Agent\Agent())->isMobile())--}}
+{{--                                <div class="input-group group-origin p-0">--}}
+{{--                                    <input type="radio" class="btn-check" name="origin"--}}
+{{--                                       id="origin-all" autocomplete="off" value="" @if (empty(request()->input('origin'))) checked @endif>--}}
+{{--                                    <label style="margin: 0 5px 5px 0" class="btn rounded-1 btn-origin @if (empty(request()->input('origin'))) btn-gt @endif" for="origin-all">Tất cả</label>--}}
+{{--                                    @foreach(\App\Domain\Story\Models\Story::ORIGINS as $key => $origin)--}}
+{{--                                        <input type="radio" class="btn-check" name="origin"--}}
+{{--                                               id="origin-{{ $key }}" autocomplete="off" value="{{ $key }}"--}}
+{{--                                               @if($key == request('origin')) checked @endif >--}}
+{{--                                        <label style="margin: 0 5px 5px 0" class="btn btn-origin @if (!empty(request()->input('origin')) && request()->input('origin') == $key) btn-gt @endif rounded-1" for="origin-{{ $key }}">{{ $origin }}</label>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                                @endif--}}
                             @if((new \Jenssegers\Agent\Agent())->isDesktop())
                             <div class="p-all">
                                 <span class="select-title">Số chương: </span>
