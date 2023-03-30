@@ -42,7 +42,7 @@ class AutoLeechFanqienovel extends Command
     public function handle()
     {
         if (setting('is_leech_on_fanqie', false)) {
-            $admin = User::where('is_vip', 1)->first();
+            $admin = User::where('id', 16)->first();
             $baseList = Http::get("https://fanqienovel.com/api/author/library/book_list/v0/?page_count=5&page_index=" . setting('leech_fanqie_page', 0))
                 ->json();
             if ($baseList['code'] == 0) {

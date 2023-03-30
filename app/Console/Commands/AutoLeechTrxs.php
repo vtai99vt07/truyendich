@@ -44,7 +44,7 @@ class AutoLeechTrxs extends Command
     {
         if (setting('is_leech_on_trxs', false)) {
             $count = 0;
-            $admin = User::where('is_vip', 1)->first();
+            $admin = User::where('id', 16)->first();
             do {
                 $bot = new LeechTrxs();
                 if (Carbon::now()->diffInDays(setting('leech_trxs_last_success_date', Carbon::now())) > 1) {

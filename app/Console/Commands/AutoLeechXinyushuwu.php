@@ -45,7 +45,7 @@ class AutoLeechXinyushuwu extends Command
     {
         if (setting('is_leech_on_xinyushuwu', false)) {
             $count = 0;
-            $admin = User::where('is_vip', 1)->first();
+            $admin = User::where('id', 16)->first();
             do {
                 $bot = new LeechXinyushuwu();
                 if (Carbon::now()->diffInDays(setting('leech_xinyushuwu_last_success_date', Carbon::now())) > 1) {

@@ -43,7 +43,7 @@ class AutoLeechUukanshu extends Command
     public function handle()
     {
         if (setting('is_leech_on_uukanshu', false)) {
-            $admin = User::where('is_vip', 1)->first();
+            $admin = User::where('id', 16)->first();
             $count = 0;
             do {
                 if (Carbon::now()->diffInDays(setting('leech_uukanshu_last_success_date', Carbon::now())) > 1) {
