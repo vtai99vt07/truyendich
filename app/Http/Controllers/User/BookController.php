@@ -111,6 +111,10 @@ class BookController extends Controller
 
     public function bookMobile(Request $request)
     {
+        if (empty(currentUser())) {
+            flash()->warning('Vui lòng đăng nhập để xem tủ sách!');
+            return response()->redirectTo('/');
+        }
         switch ($request->get('type')) {
             case 'ordered':
                 $order = Order::where('user_id', currentUser()->id)
