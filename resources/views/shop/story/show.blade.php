@@ -121,8 +121,10 @@
                 <div class="p-1 bt">Tác giả: {{ $story->author_vi }}</div>
                 <div class="p-1 bt">Thể
                     loại: @if(!empty($story->categories)) @foreach($story->categories as $category) {{ $category->name }} @endforeach @endif</div>
+                @if(strpos(url()->current(), 'truyenvipfaloo'))
                 <div class="p-1 bt">Nguồn truyện: <a class="text-success"
                                                      href="{{ $story->origin ?? '#'}}">{{ $story->origin ?? 'Sáng tác'}}</a>
+                @endif
                 </div>
                 <div class="p-1 bt">Loại
                     truyện: @if(!empty($story->types)) @foreach($story->types as $type) {{ $type->name }} @endforeach @endif</div>
@@ -249,11 +251,13 @@
                 {{--                    <span style="float: right;color: gray;margin-right: 8px">--}}
                 {{--                        <a href="#clicktoexp" style="color: gray;"><i class="fa fa-chevron-down"></i> Xuống</a></span>--}}
             </div>
+            @if(strpos(url()->current(), 'truyenvipfaloo'))
             <div class="bt p-1" style="font-size: 14px;">
                 Nguồn:
                 <span style="border-bottom: 2px solid green">{{ $story->origin ?? 'Sáng tác'}}: {{ $story->chapters_count }} chương</span>
                 {{--<a href="#">aikanshuba(96) </a>--}}
             </div>
+            @endif
             <div>
                 <div class="pt-2 pb-2 tt-box-list-chapter">
                     <div class="row tt-box-chapter">
