@@ -83,7 +83,7 @@ class LeechXinyushuwu
                 $this->_book['description'] = $node->filter('.introduce .jj')->text();
             }
         );
-        $crawler->filter('.main .ml_content .ml_list > ul li')->each(
+        $crawler->filter('.main .ml_content .ml_list > ul > li')->each(
             function (Crawler $node) {
                 $this->_book['chapters'][] = [
                     "name" => $node->filter('a')->text(),
