@@ -778,7 +778,7 @@ if (!function_exists('translateArray')) {
     function translateArray($list = [])
     {
         foreach ($list as &$item) {
-            $item = implode(', ', array_map(
+            $item = implode('\\ ', array_map(
                 function ($v, $k) {
                     if(is_array($v)){
                         return $k.'[]='.implode('&'.$k.'[]=', $v);
@@ -795,7 +795,7 @@ if (!function_exists('translateArray')) {
         $list = explode('|', $list);
         $result = [];
         foreach ($list as &$item) {
-            $item = explode(', ', $item);
+            $item = explode('\\ ', $item);
             $value = [];
             foreach ($item as &$i) {
                 $i = explode('=', $i);
