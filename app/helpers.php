@@ -501,8 +501,8 @@ function storeStory($title, $story_name, $categories, $story_name_vi, $story_des
             $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', $category);
             if (!$cat_db->exists()) {
                 $c_viet = _vp_viet($category);
-//                $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
-//                if (!$cat_db->exists()) {
+                $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
+                if (!$cat_db->exists()) {
                 $cat_db = Category::create([
                     'name' => $c_viet,
                     'status' => Category::ACTIVE,
@@ -510,14 +510,14 @@ function storeStory($title, $story_name, $categories, $story_name_vi, $story_des
                         $category
                     ])
                 ]);
-//                } else {
-//                    $name_chines = json_decode($cat_db->name_chines, true);
-//                    $name_chines[] = $category;
-//                    $cat_db = $cat_db->first();
-//                    $cat_db->update([
-//                        'name_chines' => json_encode($name_chines)
-//                    ]);
-//                }
+                } else {
+                    $name_chines = json_decode($cat_db->name_chines, true);
+                    $name_chines[] = $category;
+                    $cat_db = $cat_db->first();
+                    $cat_db->update([
+                        'name_chines' => json_encode($name_chines)
+                    ]);
+                }
             } else {
                 $cat_db = $cat_db->first();
             }
