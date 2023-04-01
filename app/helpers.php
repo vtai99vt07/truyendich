@@ -414,7 +414,7 @@ function translated($text = null)
     return $translated;
 }
 
-function embedStoryUukanshu($url, $base_url, $user, $story = null, $returnBool = false)
+function embedStoryUukanshu($url, $base_url, $user, $story = false, $returnBool = false)
 {
 
     $data = Http::get("http://103.116.104.174:8000/getlink?link=$url")->json();
