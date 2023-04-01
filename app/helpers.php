@@ -414,7 +414,7 @@ function translated($text = null)
     return $translated;
 }
 
-function embedStoryUukanshu($url, $base_url, $user, $story = false, $returnBool = false)
+function embedStoryUukanshu($url, $base_url, $user, $story = null, $returnBool = false)
 {
 
     $data = Http::get("http://103.116.104.174:8000/getlink?link=$url")->json();
@@ -498,26 +498,26 @@ function storeStory($title, $story_name, $categories, $story_name_vi, $story_des
     $cat = [];
     if (!empty($categories)) {
         foreach ($categories as $category) {
-            $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', '%' . $category . '%');
+            $cat_db = Category::where('status', Category::ACTIVE)->where('name_chines', 'like', $category);
             if (!$cat_db->exists()) {
                 $c_viet = _vp_viet($category);
-                $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
-                if (!$cat_db->exists()) {
-                    $cat_db = Category::create([
-                        'name' => $c_viet,
-                        'status' => Category::ACTIVE,
-                        'name_chines' => json_encode([
-                            $category
-                        ])
-                    ]);
-                } else {
-                    $name_chines = json_decode($cat_db->name_chines, true);
-                    $name_chines[] = $category;
-                    $cat_db = $cat_db->first();
-                    $cat_db->update([
-                        'name_chines' => json_encode($name_chines)
-                    ]);
-                }
+//                $cat_db = Category::where('status', Category::ACTIVE)->where('name', 'like', $c_viet);
+//                if (!$cat_db->exists()) {
+                $cat_db = Category::create([
+                    'name' => $c_viet,
+                    'status' => Category::ACTIVE,
+                    'name_chines' => json_encode([
+                        $category
+                    ])
+                ]);
+//                } else {
+//                    $name_chines = json_decode($cat_db->name_chines, true);
+//                    $name_chines[] = $category;
+//                    $cat_db = $cat_db->first();
+//                    $cat_db->update([
+//                        'name_chines' => json_encode($name_chines)
+//                    ]);
+//                }
             } else {
                 $cat_db = $cat_db->first();
             }
@@ -778,7 +778,7 @@ if (!function_exists('translateArray')) {
     function translateArray($list = [])
     {
         foreach ($list as &$item) {
-            $item = implode('\\ ', array_map(
+            $item = implode(', ', array_map(
                 function ($v, $k) {
                     if(is_array($v)){
                         return $k.'[]='.implode('&'.$k.'[]=', $v);
@@ -795,7 +795,7 @@ if (!function_exists('translateArray')) {
         $list = explode('|', $list);
         $result = [];
         foreach ($list as &$item) {
-            $item = explode('\\ ', $item);
+            $item = explode(', ', $item);
             $value = [];
             foreach ($item as &$i) {
                 $i = explode('=', $i);
