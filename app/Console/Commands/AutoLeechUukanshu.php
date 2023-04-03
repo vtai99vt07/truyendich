@@ -46,18 +46,18 @@ class AutoLeechUukanshu extends Command
             $admin = User::where('id', 16)->first();
             $count = 0;
             do {
-                if (Carbon::now()->diffInDays(setting('leech_uukanshu_last_success_date', Carbon::now())) > 1) {
-                    setting()->put('leech_uukanshu_book_id', setting('leech_uukanshu_last_success_id', 1) + 1);
+                if (Carbon::now()->diffInDays(setting_custom('leech_uukanshu_last_success_date', null, Carbon::now())) > 1) {
+                    setting_custom('leech_uukanshu_book_id', setting_custom('leech_uukanshu_last_success_id', null, 1) + 1);
                 }
-                $url = self::URL . setting('leech_uukanshu_book_id', 1) . '/';
+                $url = self::URL . setting_custom('leech_uukanshu_book_id', null, 1) . '/';
                 $result = embedStoryUukanshu($url, '', $admin, null, true);
                 if ($result) {
                     $count++;
-                    setting()->put('leech_uukanshu_last_success_id', setting('leech_uukanshu_book_id', 1));
-                    setting()->put('leech_uukanshu_last_success_date', Carbon::now());
+                    setting_custom('leech_uukanshu_last_success_id', setting_custom('leech_uukanshu_book_id', null, 1));
+                    setting_custom('leech_uukanshu_last_success_date', Carbon::now());
                 }
-                setting()->put('leech_uukanshu_book_id', setting('leech_uukanshu_book_id', 1) + 1);
-            } while ($count < 5 || setting('leech_uukanshu_book_id', 1) - setting('leech_uukanshu_last_success_id', 1) > 10000);
+                setting_custom('leech_uukanshu_book_id', setting_custom('leech_uukanshu_book_id', null, 1) + 1);
+            } while ($count < 5 || setting_custom('leech_uukanshu_book_id', null, 1) - setting_custom('leech_uukanshu_last_success_id', null, 1) > 10000);
         }
         return 0;
     }

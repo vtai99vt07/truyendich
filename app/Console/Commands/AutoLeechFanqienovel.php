@@ -43,7 +43,7 @@ class AutoLeechFanqienovel extends Command
     {
         if (setting('is_leech_on_fanqie', false)) {
             $admin = User::where('id', 16)->first();
-            $baseList = Http::get("https://fanqienovel.com/api/author/library/book_list/v0/?page_count=5&page_index=" . setting('leech_fanqie_page', 0))
+            $baseList = Http::get("https://fanqienovel.com/api/author/library/book_list/v0/?page_count=5&page_index=" . setting_custom('leech_fanqie_page', null,  0))
                 ->json();
             if ($baseList['code'] == 0) {
                 foreach ($baseList['data']['book_list'] as $datum) {
@@ -51,7 +51,7 @@ class AutoLeechFanqienovel extends Command
                     embedStoryUukanshu($url, '', $admin);
                 }
                 if (count($baseList['data']['book_list']) >= 5 ) {
-                    setting()->put('leech_fanqie_page', setting('leech_fanqie_page', 0) + 1);
+                    setting_custom('leech_fanqie_page', setting_custom('leech_fanqie_page', null, 0) + 1);
                 }
             }
         }

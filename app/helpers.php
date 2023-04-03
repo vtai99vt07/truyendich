@@ -813,3 +813,20 @@ if (!function_exists('encoding_utf8')) {
         }, $str);
     }
 }
+
+if (!function_exists('setting_custom')) {
+    function setting_custom($key, $value = null, $default = null) {
+        // Find key in json
+        $data = \Illuminate\Support\Facades\Storage::disk('local')->get('setting_custom.json');
+        $data = json_decode($data, true);
+        if (!empty($value)) {
+            // Save the value
+            $data[$key] = $value;
+            \Illuminate\Support\Facades\Storage::disk('local')
+                ->put('setting_custom.json', json_encode($data));
+            return 0;
+        } else {
+            return $data[$key] ?? $default;
+        }
+    }
+}
