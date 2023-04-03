@@ -151,7 +151,7 @@ class StoryController extends Controller
 //      Nhung
         if ($url) {
             if (empty(currentUser())) {
-                return response()->redirectTo('home');
+                return response()->redirectTo('/');
             }
             $bookId = '';
             $domain = '';
