@@ -13,6 +13,8 @@ use App\Domain\Activity\Whishlist;
 use App\Domain\Comment\Comment;
 use App\Domain\Admin\Models\Wallet;
 use App\Domain\Admin\Models\Donate;
+use App\Scraper\LeechTrxs;
+use App\Scraper\LeechXinyushuwu;
 use Carbon\Carbon;
 use App\Domain\Activity\Readed;
 use Illuminate\Http\Request;
@@ -24,9 +26,9 @@ class StoryController extends Controller
 {
     public function show(Story $story)
     {
-        if ($story && empty($story->idhost)){
+        if ($story && empty($story->idhost)) {
             $datahost = Http::get("http://103.116.104.174:8000/gethost?link=$story->origin")->json();
-            if (isset($datahost)&&isset($datahost['bookid'])&&isset($datahost['host'])){
+            if (isset($datahost) && isset($datahost['bookid']) && isset($datahost['host'])) {
                 $story->idhost = $datahost['bookid'];
                 $story->host = $datahost['host'];
                 $story->save();
@@ -58,7 +60,7 @@ class StoryController extends Controller
             $readeds = ($readeds && $readeds->chapters_id) ? json_decode($readeds->chapters_id, true) : [];
             $chapLastReaded = !empty($readeds) ? Chapter::whereIn('id', $readeds)->orderBy('order', 'DESC')->first() : null;
         }
-        $story->chapters =  $story->chapters_json ? json_decode($story->chapters_json, 1) : $story->chapters;
+        $story->chapters = $story->chapters_json ? json_decode($story->chapters_json, 1) : $story->chapters;
         // if(strcmp($story->origin,'uukanshu') == 1)
         //     $story->chapters =  array_reverse($story->chapters);
         $story->chapters_count = $story->chapters ? count($story->chapters) : 0;
@@ -136,11 +138,11 @@ class StoryController extends Controller
     public function search(Request $request)
     {
         /**
-        if(!empty($request->search)){
-        LogSearch::updateOrCreate([
-        'key_word' => $request->search
-        ])->increment('hits');
-        }
+         * if(!empty($request->search)){
+         * LogSearch::updateOrCreate([
+         * 'key_word' => $request->search
+         * ])->increment('hits');
+         * }
          */
         $story = null;
         $url = filter_var($request->search, FILTER_VALIDATE_URL);
@@ -148,20 +150,42 @@ class StoryController extends Controller
 
 //      Nhung
         if ($url) {
+            if (empty(currentUser())) {
+                return response()->redirectTo('home');
+            }
+            $bookId = '';
+            $domain = '';
+            if (strpos($url, 'xinyushuwu')) {
+                $embedChapter = new LeechXinyushuwu();
+                if ($embedChapter->scrape('', '', '', currentUser(), $url, true)) {
+                    $story = Story::where('origin', $url)->first();
+                    return redirect()->route('story.show', $story->id);
+                } else {
+                    dd('Không nhúng được');
+                }
+            } elseif (strpos($url, 'trxs')) {
+                $embedChapter = new LeechTrxs();
+                if ($embedChapter->scrape('', '', '', currentUser(), $url, true)) {
+                    $story = Story::where('origin', $url)->first();
+                    return redirect()->route('story.show', $story->id);
+                } else {
+                    dd('Không nhúng được');
+                }
+            }
             $datahost = Http::timeout(10)->get("http://103.116.104.174:8000/gethost?link=$url")->json();
-            if (isset($datahost)&&isset($datahost['bookid'])&&isset($datahost['host'])){
-                $story = Story::where([['idhost','=',$datahost['bookid']],['host','=',$datahost['host']]])->first();
-                if(!empty($story)){
+            if (isset($datahost) && isset($datahost['bookid']) && isset($datahost['host'])) {
+                $story = Story::where([['idhost', '=', $datahost['bookid']], ['host', '=', $datahost['host']]])->first();
+                if (!empty($story)) {
                     return redirect()->route('story.show', $story);
                 }
 
             }
 
-            if (empty($story)){
+            if (empty($story)) {
                 $story = Story::where('origin', 'like', $url . '%')->first();
-                if ($story && empty($story->hostid)){
+                if ($story && empty($story->hostid)) {
 
-                    if (isset($datahost)&&isset($datahost['bookid'])&&isset($datahost['host'])){
+                    if (isset($datahost) && isset($datahost['bookid']) && isset($datahost['host'])) {
                         $story->idhost = $datahost['bookid'];
                         $story->host = $datahost['host'];
                         $story->save();
@@ -192,10 +216,9 @@ class StoryController extends Controller
 
             embedStoryUukanshu($url, $base_url, currentUser());
             $storyNew = Story::where('origin', $url)->first();
-            if(!empty($storyNew)){
+            if (!empty($storyNew)) {
                 return redirect()->route('story.show', $storyNew->id);
             }
-
 
 
         }
@@ -206,8 +229,8 @@ class StoryController extends Controller
             foreach($stories as &$list){
                 $chapters = $list->chapters_json ? json_decode($list->chapters_json, true) : $list->chapters;
 
-                $list->chapters_view = Chapter::where('story_id',$list->id)->sum('view');
-                $list->chapters_count =  count($chapters);
+                $list->chapters_view = Chapter::where('story_id', $list->id)->sum('view');
+                $list->chapters_count = count($chapters);
             }
             return view('shop.search', [
                 'stories' => $stories,
@@ -231,7 +254,7 @@ class StoryController extends Controller
 
         $stories = $stories->with('media')->select(['id', 'avatar', 'name', 'type', 'is_vip', 'origin', 'view', 'count_chapters', 'status'])->paginate(24);
 
-        $stories->getCollection()->transform(function ($story){
+        $stories->getCollection()->transform(function ($story) {
             $origin = '';
             if ($story->origin) {
                 if (strpos($story->origin, 'faloo') !== false) {
@@ -276,12 +299,12 @@ class StoryController extends Controller
         if(!empty($keyword)) {
             $stories->orWhere('name', 'like', '%' . $keyword . '%');
         }
-        if(!empty($description)){
-            $stories->orWhere('description', 'like', '%'. $description . '%');
+        if (!empty($description)) {
+            $stories->orWhere('description', 'like', '%' . $description . '%');
         }
 
         if ($origin_link || $origin) {
-            if($origin_link){
+            if ($origin_link) {
                 $parseLink = parse_url($origin_link);
                 $base_url_link = $parseLink['scheme'] . '://' . $parseLink['host'];
                 if ($base_url_link == 'https://b.faloo.com') {
@@ -352,7 +375,7 @@ class StoryController extends Controller
             $story = Story::findOrFail($request->story_id);
             $timenow = Carbon::now();
             $time_update = Carbon::parse($story->chapter_updated)->addMinutes(5);
-            if($timenow < $time_update){
+            if ($timenow < $time_update) {
                 return response()->json([
                     'code' => 200,
                     'message' => 'Vừa mới cập nhật, không thể cập nhật thêm!'
@@ -363,7 +386,7 @@ class StoryController extends Controller
                 $parse = parse_url($url);
                 $base_url = $parse['scheme'] . '://' . $parse['host'];
                 $datahost = Http::get("http://103.116.104.174:8000/gethost?link=$url")->json();
-                if (isset($datahost['bookid'])&&isset($datahost['host'])){
+                if (isset($datahost['bookid']) && isset($datahost['host'])) {
                     embedStoryUukanshu($url, $base_url, currentUser(), $story);
                 }
 
