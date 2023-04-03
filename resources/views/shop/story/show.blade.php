@@ -241,7 +241,7 @@
                     </div>
                     <span style="padding: 10px 0px;">{{ $story->user->name ?? 'Chưa có' }}</span>
                     @if($story->user->is_vip)
-                        <span>- Mod làm truyện</span>
+                        <span style="padding: 10px 0px">- Mod làm truyện</span>
                     @endif
                 </a>
             </div>
