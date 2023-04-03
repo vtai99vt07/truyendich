@@ -71,8 +71,6 @@ class Story extends Model implements HasMedia
         "https://fanqienovel.com" => "fanqie",
         "https://www.xinyushuwu.org" => 'xinyushuwu',
         "https://www.xinyushuwu.net" => 'xinyushuwu',
-        "https://m.xinyushuwu.net" => 'xinyushuwu',
-        "https://m.xinyushuwu.org" => 'xinyushuwu',
         "https://trxs.cc" => 'trxs'
     ];
     const SOURCE_GIANGTHE = 'giangthe';

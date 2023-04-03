@@ -155,6 +155,15 @@ class StoryController extends Controller
             }
             $bookId = '';
             $domain = '';
+            $parse = parse_url($url);
+            $host = $parse['scheme'] . '://' . $parse['host'];
+            $idChapter = explode('/', $parse['path'])[2];
+            $storyExists = Story::where('host', Story::ORIGINS[$host])
+                ->where('idhost', $idChapter);
+            if ($storyExists->exists()) {
+                $storyExists = $storyExists->first();
+                return redirect()->route('story.show', $storyExists);
+            }
             if (strpos($url, 'xinyushuwu')) {
                 $embedChapter = new LeechXinyushuwu();
                 if ($embedChapter->scrape('', '', '', currentUser(), $url, true)) {
