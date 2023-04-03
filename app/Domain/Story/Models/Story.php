@@ -70,6 +70,7 @@ class Story extends Model implements HasMedia
         "https://www.bxwxorg.com" => "Bxwxorg",
         "https://fanqienovel.com" => "fanqie",
         "https://www.xinyushuwu.org" => 'xinyushuwu',
+        "https://www.xinyushuwu.net" => 'xinyushuwu',
         "https://trxs.cc" => 'trxs'
     ];
     const SOURCE_GIANGTHE = 'giangthe';
