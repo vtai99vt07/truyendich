@@ -398,8 +398,8 @@
                                             <label class="col-lg-2 col-form-label text-lg-right" for="is_leech_on_fanqie">{{ __('Bật/tắt auto leech Fanqie') }}:</label>
                                             <div class="col-lg-9">
                                                 <select name="is_leech_on_fanqie" id="is_leech_on_fanqie" class="form-control js-select2" data-placeholder="{{ __('Vui lòng chọn') }}">
-                                                    <option value="true" {{ setting('is_leech_on_fanqie') == true ? 'selected' : null }}>Bật</option>
-                                                    <option value="false" {{ setting('is_leech_on_fanqie') == false ? 'selected' : null }}>Tắt</option>
+                                                    <option value="1" {{ setting('is_leech_on_fanqie') == 1 ? 'selected' : null }}>Bật</option>
+                                                    <option value="0" {{ setting('is_leech_on_fanqie') == 0 ? 'selected' : null }}>Tắt</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -409,8 +409,8 @@
                                             <label class="col-lg-2 col-form-label text-lg-right" for="is_leech_on_uukanshu">{{ __('Bật/tắt auto leech Uukanshu') }}:</label>
                                             <div class="col-lg-9">
                                                 <select name="is_leech_on_uukanshu" id="is_leech_on_uukanshu" class="form-control js-select2" data-placeholder="{{ __('Vui lòng chọn') }}">
-                                                    <option value="true" {{ setting('is_leech_on_uukanshu') == true ? 'selected' : null }}>Bật</option>
-                                                    <option value="false" {{ setting('is_leech_on_uukanshu') == false ? 'selected' : null }}>Tắt</option>
+                                                    <option value="1" {{ setting('is_leech_on_uukanshu') == 1 ? 'selected' : null }}>Bật</option>
+                                                    <option value="0" {{ setting('is_leech_on_uukanshu') == 0 ? 'selected' : null }}>Tắt</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -420,8 +420,8 @@
                                             <label class="col-lg-2 col-form-label text-lg-right" for="is_leech_on_faloo">{{ __('Bật/tắt auto leech Faloo') }}:</label>
                                             <div class="col-lg-9">
                                                 <select name="is_leech_on_faloo" id="is_leech_on_faloo" class="form-control js-select2" data-placeholder="{{ __('Vui lòng chọn') }}">
-                                                    <option value="true" {{ setting('is_leech_on_faloo') == true ? 'selected' : null }}>Bật</option>
-                                                    <option value="false" {{ setting('is_leech_on_faloo') == false ? 'selected' : null }}>Tắt</option>
+                                                    <option value="1" {{ setting('is_leech_on_faloo') == 1 ? 'selected' : null }}>Bật</option>
+                                                    <option value="0" {{ setting('is_leech_on_faloo') == 0 ? 'selected' : null }}>Tắt</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -431,8 +431,8 @@
                                             <label class="col-lg-2 col-form-label text-lg-right" for="is_leech_on_xinyushuwu">{{ __('Bật/tắt auto leech Xinyushuwu') }}:</label>
                                             <div class="col-lg-9">
                                                 <select name="is_leech_on_xinyushuwu" id="is_leech_on_xinyushuwu" class="form-control js-select2" data-placeholder="{{ __('Vui lòng chọn') }}">
-                                                    <option value="true" {{ setting('is_leech_on_xinyushuwu') == true ? 'selected' : null }}>Bật</option>
-                                                    <option value="false" {{ setting('is_leech_on_xinyushuwu') == false ? 'selected' : null }}>Tắt</option>
+                                                    <option value="1" {{ setting('is_leech_on_xinyushuwu') == 1 ? 'selected' : null }}>Bật</option>
+                                                    <option value="0" {{ setting('is_leech_on_xinyushuwu') == 0 ? 'selected' : null }}>Tắt</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -442,8 +442,8 @@
                                             <label class="col-lg-2 col-form-label text-lg-right" for="is_leech_on_trxs">{{ __('Bật/tắt auto leech Trxs') }}:</label>
                                             <div class="col-lg-9">
                                                 <select name="is_leech_on_trxs" id="is_leech_on_trxs" class="form-control js-select2" data-placeholder="{{ __('Vui lòng chọn') }}">
-                                                    <option value="true" {{ setting('is_leech_on_trxs') == true ? 'selected' : null }}>Bật</option>
-                                                    <option value="false" {{ setting('is_leech_on_trxs') == false ? 'selected' : null }}>Tắt</option>
+                                                    <option value="1" {{ setting('is_leech_on_trxs') == 1 ? 'selected' : null }}>Bật</option>
+                                                    <option value="0" {{ setting('is_leech_on_trxs') == 0 ? 'selected' : null }}>Tắt</option>
                                                 </select>
                                             </div>
                                         </div>
