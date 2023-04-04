@@ -426,6 +426,10 @@ function embedStoryUukanshu($url, $base_url, $user, $story = false, $returnBool 
         }
     }
 
+    if (count($data['listchap']) < 80 && $returnBool) {
+        return false;
+    }
+
     $title = [];
     $story_name = $data['name'];
 
